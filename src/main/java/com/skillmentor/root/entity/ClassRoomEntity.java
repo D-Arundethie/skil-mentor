@@ -9,7 +9,6 @@ import java.util.List;
 public class ClassRoomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "class_room_id")
     private Integer classRoomId;
     @Column(name = "title")
     private String title;
@@ -17,18 +16,19 @@ public class ClassRoomEntity {
     private Double sessionFee;
     @Column(name = "enrolled_student_count")
     private Integer enrolledStudentCount;
-    @OneToMany(mappedBy = "classRoomEntity")
-    private List<SessionEntity> sessionEntityList;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "mentor_id", referencedColumnName = "mentor_id")
+    private MentorEntity mentor;
 
     public ClassRoomEntity() {
     }
 
-    public ClassRoomEntity(Integer classRoomId, String name, Double sessionFee, Integer enrolledStudentCount, List<SessionEntity> sessionEntityList) {
+    public ClassRoomEntity(Integer classRoomId, String name, Double sessionFee, Integer enrolledStudentCount, MentorEntity mentorEntity) {
         this.classRoomId = classRoomId;
         this.title = name;
         this.sessionFee = sessionFee;
         this.enrolledStudentCount = enrolledStudentCount;
-        this.sessionEntityList = sessionEntityList;
+        this.mentor = mentorEntity;
     }
 
     public Integer getClassRoomId() {
@@ -63,11 +63,11 @@ public class ClassRoomEntity {
         this.enrolledStudentCount = enrolledStudentCount;
     }
 
-    public List<SessionEntity> getSessionEntityList() {
-        return sessionEntityList;
+    public void setMentor(MentorEntity mentor) {
+        this.mentor = mentor;
     }
 
-    public void setSessionEntityList(List<SessionEntity> sessionEntityList) {
-        this.sessionEntityList = sessionEntityList;
+    public MentorEntity getMentor() {
+        return mentor;
     }
 }

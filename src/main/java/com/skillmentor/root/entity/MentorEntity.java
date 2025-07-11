@@ -2,9 +2,6 @@ package com.skillmentor.root.entity;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name = "mentor")
 public class MentorEntity {
@@ -14,27 +11,33 @@ public class MentorEntity {
     private Integer mentorId;
     @Column(name = "first_name")
     private String firstName;
+
     @Column(name = "last_name")
     private String lastName;
+
     @Column(name = "address")
     private String address;
+
     @Column(name = "email")
     private String email;
+
     @Column(name = "title")
     private String title;
+
     @Column(name = "profession")
     private String profession;
+
     @Column(name = "subject")
     private String subject;
+
     @Column(name = "qualification")
     private String qualification;
-    @OneToMany(mappedBy = "mentorEntity")
-    private List<SessionEntity> sessionEntities;
 
-    public MentorEntity() {}
+    public MentorEntity() {
+    }
 
     public MentorEntity(Integer mentorId, String firstName, String lastName, String address, String email,
-                        String title, String profession, String subject, String qualification, List<SessionEntity> sessionEntities) {
+                        String title, String profession, String subject, String qualification) {
         this.mentorId = mentorId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -44,7 +47,6 @@ public class MentorEntity {
         this.profession = profession;
         this.subject = subject;
         this.qualification = qualification;
-        this.sessionEntities = sessionEntities;
     }
 
     public Integer getMentorId() {
@@ -117,13 +119,5 @@ public class MentorEntity {
 
     public void setQualification(String qualification) {
         this.qualification = qualification;
-    }
-
-    public List<SessionEntity> getSessionEntities() {
-        return sessionEntities;
-    }
-
-    public void setSessionEntities(List<SessionEntity> sessionEntities) {
-        this.sessionEntities = sessionEntities;
     }
 }
