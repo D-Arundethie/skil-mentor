@@ -23,7 +23,7 @@ public class ClassRoomServiceImpl implements ClassRoomService {
     public List<ClassRoomDTO> getAllClassRooms() {
         final List<ClassRoomEntity> classRoomEntities = classRoomRepository.findAll();
         return classRoomEntities.stream().map(
-                entity -> {
+                entity->{
                     final ClassRoomDTO classRoomDTO = ClassRoomEntityDTOMapper.map(entity);
                     if (entity.getMentor() != null) {
                         final MentorDTO mentorDTO = MentorEntityDTOMapper.map(entity.getMentor());
@@ -61,7 +61,6 @@ public class ClassRoomServiceImpl implements ClassRoomService {
         }
         ClassRoomEntity updatedEntity = classRoomEntity.get();
         updatedEntity.setTitle(classRoomDTO.getTitle());
-        updatedEntity.setSessionFee(classRoomDTO.getSessionFee());
         updatedEntity.setEnrolledStudentCount(classRoomDTO.getEnrolledStudentCount());
         ClassRoomEntity savedEntity = classRoomRepository.save(updatedEntity);
         return ClassRoomEntityDTOMapper.map(savedEntity);

@@ -33,6 +33,9 @@ public class MentorEntity {
     @Column(name = "profession")
     private String profession;
 
+    @Column(name = "session_fee")
+    private Double sessionFee;
+
     @Column(name = "subject")
     private String subject;
 
@@ -44,7 +47,7 @@ public class MentorEntity {
 
     public MentorEntity() {}
 
-    public MentorEntity(Integer mentorId, String firstName, String lastName, String address, String email,
+    public MentorEntity(Integer mentorId, String firstName, String lastName, String address, String email, Double sessionFee,
                         String title, String profession, String subject, String qualification, List<SessionEntity> sessionEntityList, String phoneNumber) {
         this.mentorId = mentorId;
         this.firstName = firstName;
@@ -57,6 +60,7 @@ public class MentorEntity {
         this.qualification = qualification;
         this.sessionEntityList = sessionEntityList;
         this.phoneNumber = phoneNumber;
+        this.sessionFee = sessionFee;
     }
 
     public Integer getMentorId() {
@@ -147,4 +151,11 @@ public class MentorEntity {
         this.phoneNumber = phoneNumber;
     }
 
+    public Double getSessionFee() {
+        return sessionFee;
+    }
+
+    public void setSessionFee(Double sessionFee) {
+        this.sessionFee = sessionFee;
+    }
 }
