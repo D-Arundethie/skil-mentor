@@ -18,7 +18,12 @@ public class ClassRoomEntity {
     private Double sessionFee;
     @Column(name = "enrolled_student_count")
     private Integer enrolledStudentCount;
-    @OneToMany(mappedBy = "classRoomEntity", fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name="mentor_classroom",
+            joinColumns = @JoinColumn(name= "class_room_id"),
+            inverseJoinColumns = @JoinColumn(name="mentor_id")
+    )
     private List<MentorEntity> mentorEntities = new ArrayList<>();
 
     public ClassRoomEntity() {
