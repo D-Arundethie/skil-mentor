@@ -1,8 +1,10 @@
 package com.skillmentor.root.service.impl;
 
+import com.skillmentor.root.dto.ClassRoomDTO;
 import com.skillmentor.root.dto.MentorDTO;
 import com.skillmentor.root.entity.ClassRoomEntity;
 import com.skillmentor.root.entity.MentorEntity;
+import com.skillmentor.root.mapper.ClassRoomEntityDTOMapper;
 import com.skillmentor.root.mapper.MentorEntityDTOMapper;
 import com.skillmentor.root.repository.ClassRoomRepository;
 import com.skillmentor.root.repository.MentorRepository;
@@ -11,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -27,16 +28,20 @@ public class MentorServiceImpl implements MentorService {
     @Override
     public MentorDTO createMentor(MentorDTO mentorDTO) {
         MentorEntity mentorEntity = MentorEntityDTOMapper.map(mentorDTO);
-        MentorEntity savedEntity = mentorRepository.save(mentorEntity);
-        if(!Objects.isNull(mentorDTO.getClassRoomId())){
+        if (mentorDTO.getClassRoomId() != null) {
             Optional<ClassRoomEntity> optionalClassRoomEntity = classRoomRepository.findById(mentorDTO.getClassRoomId());
             if (optionalClassRoomEntity.isPresent()) {
                 ClassRoomEntity classRoomEntity = optionalClassRoomEntity.get();
-                classRoomEntity.setMentor(savedEntity);
-                classRoomRepository.save(classRoomEntity);
+                mentorEntity.setClassRoomEntity(classRoomEntity);
+                ClassRoomDTO classRoomDTO = ClassRoomEntityDTOMapper.map(classRoomEntity);
+                classRoomDTO.getMentorDTOList().add(mentorDTO);
             }
         }
-        return MentorEntityDTOMapper.map(savedEntity);
+        MentorEntity savedEntity = mentorRepository.save(mentorEntity);
+        MentorDTO savedMentorDTO = MentorEntityDTOMapper.map(savedEntity);
+        savedMentorDTO.setClassRoomDTO(mentorDTO.getClassRoomDTO());
+        savedMentorDTO.setClassRoomId(mentorDTO.getClassRoomId());
+        return savedMentorDTO;
     }
 
     @Override
@@ -57,23 +62,28 @@ public class MentorServiceImpl implements MentorService {
 
     @Override
     public MentorDTO updateMentorById(MentorDTO mentorDTO) {
-        MentorEntity mentorEntity = mentorRepository.findById(mentorDTO.getMentorId()).orElse(null);
-        if (mentorEntity != null) {
+        Optional<MentorEntity> mentorEntityOptional = mentorRepository.findById(mentorDTO.getMentorId());
+        if (mentorEntityOptional.isPresent()) {
+            MentorEntity mentorEntity = mentorEntityOptional.get();
             mentorEntity.setFirstName(mentorDTO.getFirstName());
             mentorEntity.setLastName(mentorDTO.getLastName());
             mentorEntity.setEmail(mentorDTO.getEmail());
+            mentorEntity.setProfession(mentorDTO.getProfession());
+            mentorEntity.setAddress(mentorDTO.getAddress());
+            mentorEntity.setTitle(mentorDTO.getTitle());
             mentorEntity.setSubject(mentorDTO.getSubject());
             mentorEntity.setQualification(mentorDTO.getQualification());
-            MentorEntity updatedEntity = mentorRepository.save(mentorEntity);
+
+            ClassRoomEntity classRoomEntity = null;
             if (mentorDTO.getClassRoomId() != null) {
                 Optional<ClassRoomEntity> optionalClassRoomEntity = classRoomRepository.findById(mentorDTO.getClassRoomId());
                 if (optionalClassRoomEntity.isPresent()) {
-                    ClassRoomEntity classRoomEntity = optionalClassRoomEntity.get();
-                    classRoomEntity.setMentor(updatedEntity);
-                    classRoomRepository.save(classRoomEntity);
+                    classRoomEntity = optionalClassRoomEntity.get();
                 }
             }
-            return MentorEntityDTOMapper.map(updatedEntity);
+            mentorEntity.setClassRoomEntity(classRoomEntity);
+            MentorEntity updatedMentor = mentorRepository.save(mentorEntity);
+            return MentorEntityDTOMapper.map(updatedMentor);
         }
         return null;
     }
