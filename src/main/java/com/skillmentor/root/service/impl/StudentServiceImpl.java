@@ -1,5 +1,6 @@
 package com.skillmentor.root.service.impl;
 
+import com.skillmentor.root.dao.StudentDAO;
 import com.skillmentor.root.dto.StudentDTO;
 import com.skillmentor.root.repository.StudentRepository;
 import com.skillmentor.root.service.StudentService;
@@ -11,11 +12,14 @@ import java.util.List;
 @Service
 public class StudentServiceImpl implements StudentService {
     @Autowired
-    StudentRepository studentRepository;
+    private StudentRepository studentRepository;
+
+    @Autowired
+    private StudentDAO studentDAO;
 
     @Override
     public StudentDTO createStudent(StudentDTO studentDTO) {
-        StudentDTO studentDTO1 = studentRepository.createStudent(studentDTO);
+        StudentDTO studentDTO1 = studentDAO.createStudent(studentDTO);
         return studentDTO1;
     }
 
