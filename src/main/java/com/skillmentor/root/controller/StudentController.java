@@ -17,16 +17,17 @@ public class StudentController {
 
     @PostMapping()
     public ResponseEntity<StudentDTO> createStudent(@RequestBody StudentDTO studentDTO) {
-        studentService.createStudent(studentDTO);
-        return new ResponseEntity<>(studentDTO, HttpStatus.OK);
+        StudentDTO savedDTO = studentService.createStudent(studentDTO);
+        return new ResponseEntity<>(savedDTO, HttpStatus.OK);
     }
 
     @GetMapping()
     public ResponseEntity<List<StudentDTO>> getAllStudents(
             @RequestParam(required = false) List<String> addresses,
-            @RequestParam(required = false) List<Integer> ages
-    ){
-        List<StudentDTO> studentDTOS = studentService.getAllStudents(addresses, ages);
+            @RequestParam(required = false) List<Integer> ages,
+            @RequestParam(required = false) List<String> firstNames
+    ) {
+        List<StudentDTO> studentDTOS = studentService.getAllStudents(addresses, ages, firstNames);
         return new ResponseEntity<>(studentDTOS, HttpStatus.OK);
     }
 
@@ -37,10 +38,10 @@ public class StudentController {
     }
 
     @PutMapping()
-    public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO studentDTO){
+    public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO studentDTO) {
         studentService.updateStudentById(studentDTO.getStudentId());
         return new ResponseEntity<>(studentDTO, HttpStatus.OK);
-        }
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<StudentDTO> deleteStudent(@PathVariable Integer id) {
