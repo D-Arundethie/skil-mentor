@@ -3,7 +3,6 @@ package com.skillmentor.root.dto;
 import java.time.Instant;
 
 public class SessionDTO {
-
     private Integer sessionId;
     private ClassRoomDTO classRoom;
     private MentorDTO mentor;
@@ -70,3 +69,4 @@ public class SessionDTO {
     public void setEndTime(Instant endTime) {
         this.endTime = endTime;
     }
+}

@@ -14,35 +14,27 @@ public class MentorEntity {
     private Integer mentorId;
     @Column(name = "first_name")
     private String firstName;
-
     @Column(name = "last_name")
     private String lastName;
-
     @Column(name = "address")
     private String address;
-
     @Column(name = "email")
     private String email;
-
     @Column(name = "title")
     private String title;
-
     @Column(name = "profession")
     private String profession;
-
     @Column(name = "subject")
     private String subject;
-
     @Column(name = "qualification")
     private String qualification;
-
-    @ManyToMany(mappedBy = "mentorEntities", fetch = FetchType.EAGER)
-    private List<ClassRoomEntity> classRoomEntities = new ArrayList<>();
+    @OneToMany(mappedBy = "mentorEntity")
+    private List<SessionEntity> sessionEntities;
 
     public MentorEntity() {}
 
     public MentorEntity(Integer mentorId, String firstName, String lastName, String address, String email,
-                        String title, String profession, String subject, String qualification, List<ClassRoomEntity> classRoomEntities) {
+                        String title, String profession, String subject, String qualification, List<SessionEntity> sessionEntities) {
         this.mentorId = mentorId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,7 +44,7 @@ public class MentorEntity {
         this.profession = profession;
         this.subject = subject;
         this.qualification = qualification;
-        this.classRoomEntities = classRoomEntities;
+        this.sessionEntities = sessionEntities;
     }
 
     public Integer getMentorId() {
@@ -127,11 +119,11 @@ public class MentorEntity {
         this.qualification = qualification;
     }
 
-    public void setClassRoomEntities(List<ClassRoomEntity> classRoomEntities) {
-        this.classRoomEntities = classRoomEntities;
+    public List<SessionEntity> getSessionEntities() {
+        return sessionEntities;
     }
 
-    public List<ClassRoomEntity> getClassRoomEntities() {
-        return classRoomEntities;
+    public void setSessionEntities(List<SessionEntity> sessionEntities) {
+        this.sessionEntities = sessionEntities;
     }
 }
