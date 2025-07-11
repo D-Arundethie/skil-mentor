@@ -1,6 +1,7 @@
 package com.skillmentor.root.controller;
 
 import com.skillmentor.root.dto.SessionDTO;
+import com.skillmentor.root.dto.SessionLiteDTO;
 import com.skillmentor.root.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,35 +11,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/sessions")
+@RequestMapping(value = "/session")
 public class SessionController {
-
     @Autowired
     private SessionService sessionService;
-
-    @PostMapping
-    public ResponseEntity<SessionDTO> createSession(@RequestBody SessionDTO sessionDTO) {
-        SessionDTO createdSession = sessionService.createSession(sessionDTO);
-        if (createdSession != null) {
-            return new ResponseEntity<>(createdSession, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    @PostMapping()
+    public ResponseEntity<SessionLiteDTO> createSession(@RequestBody SessionLiteDTO sessionDTO){
+        final SessionLiteDTO savedDTO = sessionService.createSession(sessionDTO);
+        return new ResponseEntity<>(savedDTO, HttpStatus.OK);
     }
 
-    @GetMapping("/{sessionId}")
-    public ResponseEntity<SessionDTO> getSessionById(@PathVariable Integer sessionId) {
-        SessionDTO sessionDTO = sessionService.getSessionById(sessionId);
-        if (sessionDTO != null) {
-            return new ResponseEntity<>(sessionDTO, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping
-    public ResponseEntity<List<SessionDTO>> getAllSessions() {
-        List<SessionDTO> sessions = sessionService.getAllSessions();
-        return new ResponseEntity<>(sessions, HttpStatus.OK);
+    @GetMapping()
+    public ResponseEntity<List<SessionDTO>> getAllSessions(){
+        final List<SessionDTO> sessionDTOS = sessionService.getAllSessions();
+        return new ResponseEntity<>(sessionDTOS, HttpStatus.OK);
     }
 }

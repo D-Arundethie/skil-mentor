@@ -1,8 +1,10 @@
 package com.skillmentor.root.service.impl;
 
 import com.skillmentor.root.dto.ClassRoomDTO;
+import com.skillmentor.root.dto.MentorDTO;
 import com.skillmentor.root.entity.ClassRoomEntity;
 import com.skillmentor.root.mapper.ClassRoomEntityDTOMapper;
+import com.skillmentor.root.mapper.MentorEntityDTOMapper;
 import com.skillmentor.root.repository.ClassRoomRepository;
 import com.skillmentor.root.service.ClassRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,17 @@ public class ClassRoomServiceImpl implements ClassRoomService {
 
     @Override
     public List<ClassRoomDTO> getAllClassRooms() {
-        return null;
+        final List<ClassRoomEntity> classRoomEntities = classRoomRepository.findAll();
+        return classRoomEntities.stream().map(
+                entity->{
+                    final ClassRoomDTO classRoomDTO = ClassRoomEntityDTOMapper.map(entity);
+                    if (entity.getMentor() != null) {
+                        final MentorDTO mentorDTO = MentorEntityDTOMapper.map(entity.getMentor());
+                        classRoomDTO.setMentorDTO(mentorDTO);
+                    }
+                    return classRoomDTO;
+                }
+        ).toList();
     }
 
     @Override
@@ -49,7 +61,6 @@ public class ClassRoomServiceImpl implements ClassRoomService {
         }
         ClassRoomEntity updatedEntity = classRoomEntity.get();
         updatedEntity.setTitle(classRoomDTO.getTitle());
-        updatedEntity.setSessionFee(classRoomDTO.getSessionFee());
         updatedEntity.setEnrolledStudentCount(classRoomDTO.getEnrolledStudentCount());
         ClassRoomEntity savedEntity = classRoomRepository.save(updatedEntity);
         return ClassRoomEntityDTOMapper.map(savedEntity);
@@ -57,6 +68,8 @@ public class ClassRoomServiceImpl implements ClassRoomService {
 
     @Override
     public ClassRoomDTO createClassRoom(ClassRoomDTO classRoomDTO) {
-        return null;
+        ClassRoomEntity classRoomEntity = ClassRoomEntityDTOMapper.map(classRoomDTO);
+        ClassRoomEntity savedEntity = classRoomRepository.save(classRoomEntity);
+        return ClassRoomEntityDTOMapper.map(savedEntity);
     }
 }

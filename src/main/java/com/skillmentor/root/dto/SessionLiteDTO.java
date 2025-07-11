@@ -2,28 +2,26 @@ package com.skillmentor.root.dto;
 
 import java.time.Instant;
 
-public class SessionDTO {
+public class SessionLiteDTO {
     private Integer sessionId;
-    private StudentDTO studentDTO;
-    private ClassRoomDTO classRoomDTO;
-    private MentorDTO mentorDTO;
+    private Integer studentId;
+    private Integer classRoomId;
+    private Integer mentorId;
     private String topic;
     private Instant startTime;
     private Instant endTime;
 
-    public SessionDTO(Integer sessionId, StudentDTO studentDTO, ClassRoomDTO classRoomDTO, MentorDTO mentorDTO, Instant startTime, Instant endTime, String topic) {
+    public SessionLiteDTO(Integer sessionId, Integer studentId, Integer classRoomId, Integer mentorId, Instant startTime, Instant endTime, String topic) {
         this.sessionId = sessionId;
-        this.studentDTO = studentDTO;
-        this.classRoomDTO = classRoomDTO;
-        this.mentorDTO = mentorDTO;
+        this.studentId = studentId;
+        this.classRoomId = classRoomId;
+        this.mentorId = mentorId;
         this.startTime = startTime;
         this.endTime = endTime;
         this.topic = topic;
     }
 
-    public SessionDTO(){
-
-    }
+    public SessionLiteDTO(){}
 
     public Integer getSessionId() {
         return sessionId;
@@ -33,28 +31,28 @@ public class SessionDTO {
         this.sessionId = sessionId;
     }
 
-    public StudentDTO getStudentDTO() {
-        return studentDTO;
+    public Integer getStudentId() {
+        return studentId;
     }
 
-    public void setStudentDTO(StudentDTO studentDTO) {
-        this.studentDTO = studentDTO;
+    public void setStudentId(Integer studentId) {
+        this.studentId = studentId;
     }
 
-    public ClassRoomDTO getClassRoomDTO() {
-        return classRoomDTO;
+    public Integer getClassRoomId() {
+        return classRoomId;
     }
 
-    public void setClassRoomDTO(ClassRoomDTO classRoomDTO) {
-        this.classRoomDTO = classRoomDTO;
+    public void setClassRoomId(Integer classRoomId) {
+        this.classRoomId = classRoomId;
     }
 
-    public MentorDTO getMentorDTO() {
-        return mentorDTO;
+    public Integer getMentorId() {
+        return mentorId;
     }
 
-    public void setMentorDTO(MentorDTO mentorDTO) {
-        this.mentorDTO = mentorDTO;
+    public void setMentorId(Integer mentorId) {
+        this.mentorId = mentorId;
     }
 
     public Instant getStartTime() {
@@ -76,6 +74,7 @@ public class SessionDTO {
     public String getTopic() {
         return topic;
     }
+
     public void setTopic(String topic) {
         this.topic = topic;
     }

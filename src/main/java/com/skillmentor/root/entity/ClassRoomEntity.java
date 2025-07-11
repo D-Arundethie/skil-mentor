@@ -2,6 +2,7 @@ package com.skillmentor.root.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,17 +18,21 @@ public class ClassRoomEntity {
     private Double sessionFee;
     @Column(name = "enrolled_student_count")
     private Integer enrolledStudentCount;
-    @OneToMany(mappedBy = "classRoomEntity")
-    private List<SessionEntity> sessionEntityList;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "mentor_id", referencedColumnName = "mentor_id")
+    private MentorEntity mentor;
+    @OneToMany(mappedBy = "classRoomEntity", fetch = FetchType.EAGER)
+    private List<SessionEntity> sessionEntityList = new ArrayList<>();
 
     public ClassRoomEntity() {
     }
 
-    public ClassRoomEntity(Integer classRoomId, String name, Double sessionFee, Integer enrolledStudentCount, List<SessionEntity> sessionEntityList) {
+    public ClassRoomEntity(Integer classRoomId, String name, Double sessionFee, Integer enrolledStudentCount, MentorEntity mentorEntity, List<SessionEntity> sessionEntityList) {
         this.classRoomId = classRoomId;
         this.title = name;
         this.sessionFee = sessionFee;
         this.enrolledStudentCount = enrolledStudentCount;
+        this.mentor = mentorEntity;
         this.sessionEntityList = sessionEntityList;
     }
 
@@ -63,11 +68,19 @@ public class ClassRoomEntity {
         this.enrolledStudentCount = enrolledStudentCount;
     }
 
-    public List<SessionEntity> getSessionEntityList() {
-        return sessionEntityList;
+    public void setMentor(MentorEntity mentor) {
+        this.mentor = mentor;
+    }
+
+    public MentorEntity getMentor() {
+        return mentor;
     }
 
     public void setSessionEntityList(List<SessionEntity> sessionEntityList) {
         this.sessionEntityList = sessionEntityList;
+    }
+
+    public List<SessionEntity> getSessionEntityList() {
+        return sessionEntityList;
     }
 }

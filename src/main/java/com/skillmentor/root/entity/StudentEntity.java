@@ -2,6 +2,7 @@ package com.skillmentor.root.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,10 +24,10 @@ public class StudentEntity {
     private String address;
     @Column(name = "age")
     private Integer age;
-    @OneToMany(mappedBy = "studentEntity")
-    private List<SessionEntity> sessionEntities;
+    @OneToMany(mappedBy = "studentEntity", fetch = FetchType.EAGER)
+    private List<SessionEntity> sessionEntityList = new ArrayList<>();
 
-    public StudentEntity(Integer studentId, String firstName, String lastName, String email, String phoneNumber, String address, Integer age, List<SessionEntity> sessionEntities) {
+    public StudentEntity(Integer studentId, String firstName, String lastName, String email, String phoneNumber, String address, Integer age, List<SessionEntity> sessionEntityList) {
         this.studentId = studentId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -34,7 +35,7 @@ public class StudentEntity {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.age = age;
-        this.sessionEntities = sessionEntities;
+        this.sessionEntityList = sessionEntityList;
     }
 
     public StudentEntity() {
@@ -97,11 +98,11 @@ public class StudentEntity {
         this.age = age;
     }
 
-    public List<SessionEntity> getSessionEntities() {
-        return sessionEntities;
+    public void setSessionEntityList(List<SessionEntity> sessionEntityList) {
+        this.sessionEntityList = sessionEntityList;
     }
 
-    public void setSessionEntities(List<SessionEntity> sessionEntities) {
-        this.sessionEntities = sessionEntities;
+    public List<SessionEntity> getSessionEntityList() {
+        return sessionEntityList;
     }
 }
