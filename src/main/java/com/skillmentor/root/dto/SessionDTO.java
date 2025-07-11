@@ -4,22 +4,23 @@ import java.time.Instant;
 
 public class SessionDTO {
     private Integer sessionId;
-    private ClassRoomDTO classRoom;
-    private MentorDTO mentor;
-    private StudentDTO student;
+    private StudentDTO studentDTO;
+    private ClassRoomDTO classRoomDTO;
+    private MentorDTO mentorDTO;
     private Instant startTime;
     private Instant endTime;
 
-    public SessionDTO(Integer sessionId, ClassRoomDTO classRoom, MentorDTO mentor, StudentDTO student, Instant startTime, Instant endTime) {
+    public SessionDTO(Integer sessionId, StudentDTO studentDTO, ClassRoomDTO classRoomDTO, MentorDTO mentorDTO, Instant startTime, Instant endTime) {
         this.sessionId = sessionId;
-        this.classRoom = classRoom;
-        this.mentor = mentor;
-        this.student = student;
+        this.studentDTO = studentDTO;
+        this.classRoomDTO = classRoomDTO;
+        this.mentorDTO = mentorDTO;
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-    public SessionDTO() {
+    public SessionDTO(){
+
     }
 
     public Integer getSessionId() {
@@ -30,28 +31,28 @@ public class SessionDTO {
         this.sessionId = sessionId;
     }
 
-    public ClassRoomDTO getClassRoom() {
-        return classRoom;
+    public StudentDTO getStudentDTO() {
+        return studentDTO;
     }
 
-    public void setClassRoom(ClassRoomDTO classRoom) {
-        this.classRoom = classRoom;
+    public void setStudentDTO(StudentDTO studentDTO) {
+        this.studentDTO = studentDTO;
     }
 
-    public MentorDTO getMentor() {
-        return mentor;
+    public ClassRoomDTO getClassRoomDTO() {
+        return classRoomDTO;
     }
 
-    public void setMentor(MentorDTO mentor) {
-        this.mentor = mentor;
+    public void setClassRoomDTO(ClassRoomDTO classRoomDTO) {
+        this.classRoomDTO = classRoomDTO;
     }
 
-    public StudentDTO getStudent() {
-        return student;
+    public MentorDTO getMentorDTO() {
+        return mentorDTO;
     }
 
-    public void setStudent(StudentDTO student) {
-        this.student = student;
+    public void setMentorDTO(MentorDTO mentorDTO) {
+        this.mentorDTO = mentorDTO;
     }
 
     public Instant getStartTime() {
