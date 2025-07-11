@@ -22,9 +22,12 @@ public class StudentController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<StudentDTO>> getAllStudents() {
-        List<StudentDTO> StudentDTOs = studentService.getAllStudents();
-        return new ResponseEntity<>(StudentDTOs, HttpStatus.OK);
+    public ResponseEntity<List<StudentDTO>> getAllStudents(
+            @RequestParam(required = false) List<String> addresses,
+            @RequestParam(required = false) List<Integer> ages
+    ){
+        List<StudentDTO> studentDTOS = studentService.getAllStudents(addresses, ages);
+        return new ResponseEntity<>(studentDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

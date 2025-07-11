@@ -1,12 +1,17 @@
 package com.skillmentor.root.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "student")
 public class StudentEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer studentId;
     @Column(name = "first_name")
     private String firstName;
@@ -29,7 +34,6 @@ public class StudentEntity {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.age = age;
-
     }
 
     public StudentEntity() {
@@ -77,7 +81,7 @@ public class StudentEntity {
     }
 
     public String getAddress() {
-        return address;
+        return this.address;
     }
 
     public void setAddress(String address) {
@@ -85,11 +89,10 @@ public class StudentEntity {
     }
 
     public Integer getAge() {
-        return age;
+        return this.age;
     }
 
     public void setAge(Integer age) {
         this.age = age;
     }
 }
-

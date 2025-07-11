@@ -17,11 +17,13 @@ public interface StudentService {
 
 
     /**
-     * Retrieves all students.
+     * Retrieves all students, optionally filtered by addresses and ages.
      *
-     * @return a list of StudentDTOs
+     * @param addresses a list of addresses to filter students by (optional)
+     * @param ages a list of ages to filter students by (optional)
+     * @return a list of StudentDTOs matching the criteria
      */
-    List<StudentDTO> getAllStudents();
+    List<StudentDTO> getAllStudents(List<String> addresses, List<Integer> ages);
 
     /**
      * Retrieves a student by their ID.
@@ -38,6 +40,8 @@ public interface StudentService {
      * @return the updated StudentDTO
      */
     StudentDTO updateStudentById(Integer id);
+
+    StudentDTO updateStudentById(StudentDTO studentDTO);
 
     /**
      * Deletes a student by their ID.
