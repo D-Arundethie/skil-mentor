@@ -8,7 +8,7 @@ import com.skillmentor.root.entity.LiteSessionEntity;
 import com.skillmentor.root.entity.SessionEntity;
 import com.skillmentor.root.mapper.AuditDTOEntityMapper;
 import com.skillmentor.root.mapper.LiteSessionEntityDTOMapper;
-import com.skillmentor.root.mapper.SessionDTOEntityMapper;
+import com.skillmentor.root.mapper.SessionEntityDTOMapper;
 import com.skillmentor.root.repository.LiteSessionRepository;
 import com.skillmentor.root.repository.SessionRepository;
 import com.skillmentor.root.service.SessionService;
@@ -42,7 +42,7 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public List<SessionDTO> getAllSessions() {
         List<SessionEntity> sessions = sessionRepository.findAll();
-        return sessions.stream().map(SessionDTOEntityMapper::map).toList();
+        return sessions.stream().map(SessionEntityDTOMapper::map).toList();
     }
 
     @Override
